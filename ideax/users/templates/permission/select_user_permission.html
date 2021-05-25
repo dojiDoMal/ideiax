@@ -1,0 +1,51 @@
+{% extends 'ideax/base.html' %}
+{% load widget_tweaks i18n %}
+
+{%block contextbutton%}
+{% endblock %}
+
+{% block content %}
+
+<div class="idea-list-bg">
+    <h1 class="display-3">{% trans 'User Permissions' %}</h1>
+</div>
+<div class="container">
+  {% for message in messages %}
+    <div class="alert alert-dismissible alert-{% if message.tags == 'error' %}danger{%else%}{{message.tags}}{%endif%}">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        {{ message }}
+    </div>
+  {% endfor %}
+  <table class="table table-category">
+  <thead>
+    <tr>
+      <th>{% trans 'Username' %}</th>
+      <th>{% trans 'First name' %}</th>
+      <th>{% trans 'Last name' %}</th>
+      <th>{% trans 'Email' %}</th>
+      <th>{% trans 'Groups' %}</th>
+      <th>{% trans 'Edit' %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users %}
+      <tr>
+        <td>{{user.username}}</td>
+        <td>{{user.first_name}}</td>
+        <td>{{user.last_name}}</td>
+        <td>{{user.email}}</td>
+        <td>{% for group in user.groups %}
+              {{group}}{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        </td>
+        <div class="button-group">
+          <td><button type="button" class="btn" onclick="location.href='{% url 'users:edit-permission' username=user.username %}';"><i class="fa fa-edit"></i></button></td>
+        </div>
+      </tr>
+    {% endfor %}
+</tbody>
+</table>
+
+</div>
+
+{% endblock %}

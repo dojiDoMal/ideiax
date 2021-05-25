@@ -1,0 +1,43 @@
+{% load widget_tweaks i18n %}
+
+<div id="evaluation-message" class="alert alert-dismissible fade show" role="alert" style="display:none"></div>
+<div id="score" class="form-group score {%if idea.score <= 0%}hide{%endif%}" >
+  <div class="row">
+    <div class="col-sm-10 pt-2">
+        <div class="progress" id="evaluationProgress">
+          <div id="score_progress_bar" class="progress-bar" role="progressbar" style="width: {% widthratio idea.score|floatformat:0 5 100 %}%" aria-valuenow="{{idea.score|floatformat:0}}" aria-valuemin="0" aria-valuemax="5"></div>
+        </div>
+      </div>
+      <div class="col-sm-2 pt-1 text-right">
+        <p class="h4" id="score_value">{{idea.score|floatformat:2}} de 5</p>
+      </div>
+  </div>
+</div>
+
+
+<br />
+{%if form_evaluation%}
+<form method="post" id="evaluation_form" class="post-form" novalidate>
+  {% csrf_token %}
+  {% for field in form_evaluation %}
+    <div class="form-group{% if field.errors %} has-error{% endif %}">
+      {% if field.label != '' %}
+        <label for="{{field.id_for_label}}">{{field.label}}: </label> {{field.help_text}}
+      {%endif%}
+      {{ field|add_class:'form-control' }}
+      {% for error in field.errors %}
+        <p class="help-block">{{ error }}</p>
+      {% endfor %}
+    </div>
+  {% endfor %}
+  
+  <input id="salvar-parcial" type="submit" class="btn btn-primary" {% if idea.evaluated == 2%}disabled{%endif%} 
+  action="{% url 'evaluation_parcial' idea.pk%}" confirmation="false" value="{% trans 'Parcial Save' %}"/>
+  <input id="salvar-total" type="submit"  class="btn btn-primary btn-evaluation-save" {% if idea.evaluated == 2%}disabled{%endif%} 
+      data-string="{% trans 'When you save the evaluation, it can not be changed. Do you want to complete the evaluation?' %}" 
+      action="{% url 'evaluation' idea.pk%}" confirmation="true" value="{% trans 'Save' %}"/>
+
+</form>
+{% include 'ideax/includes/partial_modal_idea_save.html' %}
+{%endif%}
+

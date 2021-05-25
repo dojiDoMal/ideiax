@@ -1,0 +1,20 @@
+{% load widget_tweaks i18n staticfiles %}
+
+{% include 'ideax/includes/partial_modal_delete.html' %}
+<div class="carousel-item active challenge-item" style="margin-top: 20px;">
+
+<img class="d-block w-100" src="{{challenge.image.url}}" alt="First slide">
+<a href="{% url 'challenge_detail' challenge_pk=challenge.pk %}">
+    <div class="carousel-caption d-none d-md-block carousel-challenge" >
+        <h5>{{challenge.title}}</h5>
+        <p>{{challenge.summary}}</p>
+    </div>
+</a>
+<div class="challenge-buttons">
+    <a class="delete btn btn-primary btn-click-del-challenge" data-string="{% trans 'Would you like to delete ' %}" data-name="{% trans 'the challenge' %}" data-id="{{challenge.pk}}" id="btn-confirm-deletion"><i class="far fa-trash-alt"></i></a>
+    <a onclick="location.href='{% url 'challenge_edit' challenge_pk=challenge.pk %}';" class="edit btn btn-primary"><i class="far fa-edit"></i></a>
+
+</div>
+</div>
+
+

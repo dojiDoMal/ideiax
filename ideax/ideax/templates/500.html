@@ -1,0 +1,16 @@
+{% extends 'ideax/base.html' %}
+{% load staticfiles i18n %}
+{%block contextbutton%}
+{% endblock %}
+{% block content %}
+<div class="container permission-error">
+    <img src="{% static 'images/500.png' %}">
+  <p>Ocorreu um erro no servidor!</p>
+  <p>Limpe os seus arquivos temporários (ex.: cookies) e tente novamente.</p>
+  <p style="font-size: 1.2em;">Se estiver utilizando o Chrome <a target="_blank" href="https://support.google.com/accounts/answer/32050">clique aqui</a> e siga as instruções.</p>
+  <p style="font-size: 1.2em;">Caso utilize o Firefox <a target="_blank" href="http://br.mozdev.org/firefox/cookies">clique aqui</a> e siga as instruções.</p>  
+  <button type="button" onclick="window.history.go(-1); return false;" class="btn btn-secondary">{% trans 'Return' %}</button>
+</div>
+
+
+{% endblock %}

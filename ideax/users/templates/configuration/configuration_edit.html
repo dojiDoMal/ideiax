@@ -1,0 +1,83 @@
+{% extends 'ideax/base.html' %}
+{% load widget_tweaks i18n %}
+
+{%block contextbutton%}
+{% endblock %}
+
+{% block content %}
+
+<div class="idea-list-bg">
+    <h1 class="display-3">{% trans 'Update Auth Configuration' %}</h1>
+</div>
+<div class="container">
+  {% for message in messages %}
+    <div class="alert alert-dismissible alert-{% if message.tags == 'error' %}danger{%else%}{{message.tags}}{%endif%}">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        {{ message }}
+    </div>
+  {% endfor %}
+
+  <div class="row">
+    <div class="col-sm-12 auth_configuration">      
+      <p> <i class="fas fa-exclamation-triangle"></i> {% trans 'Be careful the configuration of password is save in plaintext. It is high recommend the user just have search permission.' %}</p>
+    </div>
+  </div>
+
+  <form method="post" class="form post-form" action="{% url 'users:edit-configuration' %}">
+    {% csrf_token %}
+    <div class="form-group{% if form.auth_type.errors %} has-error{% endif %}">
+      <label for="{{form.auth_type.id_for_label}}">{{form.auth_type.label}}</label>
+      {{ form.auth_type|add_class:'form-control' }}
+      {% for error in form.auth_type.errors %}
+        <p class="help-block">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="form-group{% if form.host.errors %} has-error{% endif %}">
+      <label for="{{form.host.id_for_label}}">{{form.host.label}} ({% trans 'Here is necessary put protocol like: ldap:// ou ldaps://' %})</label>
+      {{ form.host|add_class:'form-control'|attr:_('placeholder:host') }}
+      {% for error in form.host.errors %}
+        <p class="help-block">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="form-group{% if form.bind_dn.errors %} has-error{% endif %}">
+      <label for="{{form.bind_dn.id_for_label}}">{{form.bind_dn.label}}</label>
+      {{ form.bind_dn|add_class:'form-control'|attr:_('placeholder:bind_dn') }}
+      {% for error in form.bind_dn.errors %}
+        <p class="help-block">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="form-group{% if form.bind_password.errors %} has-error{% endif %}">
+      <label for="{{form.bind_password.id_for_label}}">{{form.bind_password.label}}</label>
+      {{ form.bind_password|add_class:'form-control'|attr:_('placeholder:bind_password') }}
+      {% for error in form.bind_password.errors %}
+        <p class="help-block">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="form-group{% if form.user_search_base.errors %} has-error{% endif %}">
+      <label for="{{form.user_search_base.id_for_label}}">{{form.user_search_base.label}}</label>
+      {{ form.user_search_base|add_class:'form-control'|attr:_('placeholder:user_search_base') }}
+      {% for error in form.user_search_base.errors %}
+        <p class="help-block">{{ error }}</p>
+      {% endfor %}
+    </div>    
+
+    <div class="form-group{% if form.user_filter.errors %} has-error{% endif %}">
+      <label for="{{form.user_filter.id_for_label}}">{{form.user_filter.label}}</label>
+      {{ form.user_filter|add_class:'form-control'|attr:_('placeholder:user_filter') }}
+      {% for error in form.user_filter.errors %}
+        <p class="help-block">{{ error }}</p>
+      {% endfor %}
+    </div>   
+
+    <div class="button-group">
+      <a href="{% url 'administration:index' %}">{% trans 'Return' %}</a>
+      <button type="submit" class="btn btn-primary">{% trans 'Update' %}</button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

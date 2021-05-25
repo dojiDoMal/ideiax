@@ -1,0 +1,34 @@
+{% extends "ideax/base.html" %}
+{% load widget_tweaks staticfiles i18n %}
+
+{% block content %}
+
+    <div class="login-box container text-center">
+      {% if form.errors %}
+        <!-- @TODO: Corrigir o problema nas mensagens de erro. -->
+        <div class="alert alert-danger" style="margin-top: 100px;">
+          <div class="login_error_message">
+            {% trans "Your username and password didn't match. Please try again." %}
+          </div>
+        </div>
+      {% endif %}
+
+    {% for message in messages %}
+      <div style="margin-top: 100px;" class="alert alert-dismissible alert-{% if message.tags == 'error' %}danger{%else%}{{message.tags}}{%endif%}">      
+            {{ message }}
+      </div>
+    {% endfor %}
+
+      <form class="form-signin" method="post" action="{% url 'users:login' %}">
+        {% csrf_token %}
+        <img class="mb-4" src="{% static 'images/idea_launch.png' %}" alt="" width="72">
+        <h1 class="h3 mb-3 font-weight-normal">{% trans 'You must be logged in to access ideas.' %}</h1>
+        <label for="id_username" class="sr-only">{% trans 'Username' %}</label>
+        {{ form.username|attr:'class:form-control'|attr:_('placeholder:email') }}
+        <label for="id_password" class="sr-only">{% trans 'Password' %}</label>
+        {{ form.password|attr:'class:form-control'|attr:_('placeholder:password') }}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">{% trans 'Sign in' %}</button>
+        <input type="hidden" name="next" value="{{ next }}" />
+      </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% load widget_tweaks %}
+
+
+
+<div class="form-group{% if form.image.errors %} has-error{% endif %}">
+  <label for="{{form.image.id_for_label}}">{{form.image.label}}</label>
+  {{ form.image|add_class:'form-control' }}
+  {% for error in form.image.errors %}
+    <p class="help-block">{{ error }}</p>
+  {% endfor %}
+</div>
+
+<div class="form-group{% if form.description.errors %} has-error{% endif %}">
+  <label for="{{form.description.id_for_label}}">{{form.description.label}}</label>
+  {{ form.description|add_class:'form-control' }}
+  {% for error in form.description.errors %}
+    <p class="help-block">{{ error }}</p>
+  {% endfor %}
+</div>
+
+<div class="form-group{% if form.category.errors %} has-error{% endif %}">
+  <label for="{{form.category.id_for_label}}">{{form.category.label}}</label>
+  {{ form.category|add_class:'form-control' }}
+  {% for error in form.category.errors %}
+    <p class="help-block">{{ error }}</p>
+  {% endfor %}
+</div>

@@ -1,0 +1,5 @@
+{% load i18n %}
+
+{%if GOOGLE_RECAPTCHA_PUBLIC_KEY%}
+    <div class="g-recaptcha" data-sitekey={{GOOGLE_RECAPTCHA_PUBLIC_KEY}}></div>
+{%endif%}

@@ -1,0 +1,27 @@
+{% load widget_tweaks i18n %}
+
+<table class="table table-category">
+  <thead>
+    <tr>
+      <th>{% trans 'Title' %}</th>
+      <th>{% trans 'Description' %}</th>
+      <th>{% trans 'Edit' %}</th>
+      <th>{% trans 'Discard' %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for dimension in dimension_list %}
+      <tr>
+        <td>{{dimension.title}}</td>
+        <td>{{dimension.description}}</td>
+        <div class="button-group">
+          <td><button type="button" class="btn" onclick="location.href='{% url 'dimension_edit' pk=dimension.pk %}';"><i class="fa fa-edit"></i></button></td>
+          <td><button type="button" class="delete btn btn-click-del-dimension" data-string="{% trans 'Would you like to delete ' %}" data-name="{% trans 'the dimension' %}" data-id="{{dimension.pk}}" id="btn-confirm-deletion" ><i class="fa fa-trash"></i></button></td>
+        </div>
+      </tr>
+    {% endfor %}
+</tbody>
+</table>
+ 
+{% include 'ideax/includes/partial_modal_delete.html' %}
+

@@ -1,0 +1,43 @@
+{% extends 'ideax/base.html' %}
+{% load widget_tweaks i18n %}
+{% load staticfiles %}
+
+{%block contextbutton%}
+{% endblock %}
+{% block content %}
+<div class="idea-list-bg">
+  <h1 class="display-3">{% trans 'Edit Idea' %}</h1>
+</div>
+<div class="idea-form container">
+  <form method="post" class="post-form js-idea-update-form" action="{% url 'idea_edit' form.instance.pk %}" data-modal="#modal-idea-crud" data-list-div="#idea-list">
+    {% csrf_token %}
+    <div class="idea-form-body">
+      {% include 'ideax/includes/partial_idea_form.html' %}
+      <div class="button-group">
+        {% include 'ideax/includes/recaptcha.html' %}
+        <a class="back-redirect btn" href="/">{% trans 'Return' %}</a>
+        <button type="submit" class="btn btn-primary">{% trans 'Update' %}</button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}
+{% block footer %}
+<script type="text/javascript" src="{% static 'plugins/js/resizable.min.js' %}"></script>
+<script src="{% static '/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript">
+  // <![CDATA[
+  var bootstrapButton = $.fn.button.noConflict();
+  var bootstrapAlert = $.fn.alert.noConflict();
+  var bootstrapCarousel = $.fn.carousel.noConflict();
+  var bootstrapCollapse = $.fn.collapse.noConflict();
+  var bootstrapDropdown = $.fn.dropdown.noConflict();
+  var bootstrapModal = $.fn.modal.noConflict();
+  var bootstrapTooltip = $.fn.tooltip.noConflict();
+  var bootstrapPopover = $.fn.popover.noConflict();
+  var bootstrapScrollspy = $.fn.scrollspy.noConflict();
+  var bootstrapTab = $.fn.tab.noConflict();
+  var bootstrapAffix = $.fn.affix.noConflict();
+  // ]]>
+  </script>
+{% endblock %}

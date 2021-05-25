@@ -1,0 +1,66 @@
+{% extends 'ideax/base.html' %}
+{% load i18n staticfiles %}
+{% load martortags %}
+
+{%block contextbutton%}
+{% endblock %}
+
+{% block content %}
+<div class="challenge-list-bg" id="idea-title">
+  <h1 class="display-3 desktop-title
+    {% if challenge.title|length <= 70 %}
+      big-title
+    {% elif challenge.title|length > 70 and challenge.title|length <= 130  %}
+      medium-title
+    {% else %}
+      small-title
+    {% endif %}
+  ">{{ challenge.title }}</h1>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 challenge-detail">
+      <p class="text-center">
+          {{challenge.summary}}
+      </p>
+      <p class="text-center">
+        <small class="text-muted">{% trans 'By' %}
+          <span id="real-author"></span>{{challenge.requester}}</small>
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 text-center pb-3">
+      <div class="challenge-menu">
+        <span class="badge badge-secondary">{{ idea.get_current_phase.description }}</span>
+        <p>{% trans 'Initial Date' %}: <span>{{challenge.init_date|date:"d/m/Y"}}</span></p>
+        <p>{% trans 'Expiration Date' %}: <span>{{challenge.limit_date|date:"d/m/Y"}}</span></p>
+        <a href="{% url 'idea_new_from_challenge' challenge_pk=challenge.pk %}" role="button" aria-pressed="true" class="btn btn-outline-info btn-sm" target="_blank">
+            {% trans 'Submit Idea' %}
+        </a>
+        <a href="#related-ideas" role="button" aria-pressed="true" class="btn btn-outline-info btn-sm">
+            {% trans 'Ideas Related' %}
+        </a>
+      </div>
+    </div>
+
+    <div class="col-md-10">
+      <div class="challenge-body" >
+          <h4>{% trans 'Description' %}</h4>
+          <p>{{ challenge.description|linebreaksbr|safe_markdown }}</p>
+          <h4 id="related-ideas">{% trans 'Related Ideas Challenge' %}</h4>
+          {% if ideas %}
+          <div class="grid" id="idea-list-group">
+            {% for idea in ideas %}
+              {% include 'ideax/includes/idea_detail.html' %}
+            {% endfor %}
+          </div>
+          {%else%}
+          {% trans 'We dont have any ideas yet' %}
+          {%endif%}
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="{% static '/js/real-author.js' %}" > </script>
+{% endblock %}

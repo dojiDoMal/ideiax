@@ -1,0 +1,136 @@
+= Firsts steps in development
+
+=== Introduction
+
+Idea^X^ is developed in python 3 with Django, so you need to prepare your development environment. For this, we considered that you already have it in your machine. To confirm, please, use the following command in your terminal.
+
+
+`$ python3 --version`
+
+`Python 3.6.5`
+
+If you haven't python in your computer, install it first:
+
+`$ apt install python3 # for linux`
+
+`$ brew install python3 # for mac`
+
+After, clone the project in your computer:
+
+`$ git clone https://github.com/dataprev/ideax.git`
+
+Now, you need create your python environment and load it, using the package virtualenv. In a linux env, can be something like this:
+
+`$ sudo apt install virtualenv`
+
+`$ virtualenv -p python3 ~/.env`
+
+`$ . ~/.env/bin/activate`
+
+By end, to install the required packages:
+
+`cd ~/ideax`
+
+`pip install -r requirements/dev.txt`
+
+=== Loading the system
+
+With the system installed, you need create a .env file into root directory, copying the file env.example and changing what is necessary.
+
+`$ cp env.example .env`
+
+In .env file, you need to add a secret key. To generate it, type the following commands in prompt and, at end, will generate a long string. Copy it and past into .env file, for secret_key variable.
+
+`$ python`
+
+`>>> from django.utils.crypto import get_random_string`
+
+`>>> chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'`
+
+`>>> get_random_string(50, chars)`
+
+After, you need to create/populate the database, create a user and at end run the server in development mode.
+
+`$ ./manage.py migrate`
+
+`$ ./manage.py createsuperuser`
+
+`$ ./manage.py runserver`
+
+=== Extra settings
+
+If you want to work with LDAP or MySQL, you need to install some aditional development packages in your system. In a linux box:
+
+`$ sudo apt install gcc libpython3.5-dev         # minimal packages to build python libs`
+
+`$ sudo apt install libldap2-dev libsasl2-dev    # packages to work with LDAP`
+
+`$ pip install -r pyldap django-auth-ldap`
+
+`$ sudo apt install libmariadbclient-dev         # package to work with MySQL`
+
+`$ pip install mysqlclient`
+
+To work with translations, you need to install gettext tool.
+
+`$ sudo apt install gettext  # for linux`
+
+`$ brew install gettext      # for mac`
+
+After, compile your messages.
+
+`$ ./manage.py compilemessages`
+
+
+=== Tenant configuration
+To work with tenants, you need to follow the steps bellow:
+
+First of all, change the database configuration to connect to PostgreSQL updating the .env file
+
+[source, python]
+DATABASE_NAME=database
+DATABASE_USER=user
+DATABASE_PASSWORD=password
+DATABASE_HOST=host
+DATABASE_PORT=5432
+
+Install the PostgreSQL adapter __psycopg2__:
+
+`$ pip instal psycopg2`
+
+Create the shared apps on the schema
+
+`$ ./manage.py migrate_schemas --shared`
+
+Now it's necessary to create a tenant model. To do it, access the python shell
+
+`$ ./manage.py shell`
+
+To create a public tenant, insert the code bellow:
+
+[source, python]
+from ideax.tenant.models import Client
+tenant = Client(domain_url='localhost',
+                schema_name='public',
+                name='Ideia X',
+                on_trial=False)
+tenant.save()
+
+
+To create dataprev tenant:
+
+[source, python]
+from ideax.tenant.models import Client
+tenant = Client(domain_url='dataprev.gov.br',
+                schema_name='dataprev',
+                name='Dataprev',
+                on_trial=False)
+tenant.save()
+
+Using dataprev tenant, we are gonna create a super user:
+
+`$ ./manage.py createsuperuser --username=admin@dataprev.gov.br --schema=dataprev`
+
+and populate the database with some initial datas:
+
+`$ ./manage.py tenant_command loaddata docker/initialdata.json --schema=dataprev`

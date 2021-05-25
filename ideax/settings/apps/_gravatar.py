@@ -1,0 +1,4 @@
+from ..django._core import INSTALLED_APPS
+
+
+INSTALLED_APPS.append('django_gravatar')

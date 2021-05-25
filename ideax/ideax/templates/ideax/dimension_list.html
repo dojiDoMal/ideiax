@@ -1,0 +1,27 @@
+{% extends 'ideax/base.html' %}
+{% load staticfiles i18n %}
+
+{%block contextbutton%}
+<div class="fab-button">
+  <a class="btn btn-idea-new btn-primary" href="/dimension/new/" title="{% trans 'New Dimension' %}"><i class="fas fa-plus"></i><i class="fas fa-list-alt fa-2x"></i></a>
+</div>
+{% endblock %}
+{% block content %}
+<div class="idea-list-bg">
+    <h1 class="display-3">{% trans 'Dimensions' %}</h1>
+</div>
+
+<div class="container">
+  {% for message in messages %}
+    <div class="alert alert-dismissible alert-{% if message.tags == 'error' %}danger{%else%}{{message.tags}}{%endif%}">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ message }}
+    </div>
+  {% endfor %}
+
+  <div id="category-list">
+    {% include 'ideax/includes/partial_dimension_list.html' %}
+
+  </div>
+</div>
+{% endblock %}

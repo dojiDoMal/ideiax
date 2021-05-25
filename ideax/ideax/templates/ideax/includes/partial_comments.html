@@ -1,0 +1,53 @@
+{% load mptt_tags %}
+{% load widget_tweaks i18n %}
+{% load humanize %}
+
+  <div id="comments-list" class="comment-list">
+    {% recursetree comments %}
+      <div class="media comment pb-2">
+        <div class="media-body">
+          <div class="card">
+            <div class="card-header">
+                <div class="container-fluid">
+                  <div class="row">
+                      <h5 class="col-sm-10" > {{ node.author.user }} <small class="text-muted">{% trans 'made a comment' %} {{ node.date|naturaltime}}</small></h5>
+                      <h6 class="col-sm-2 text-right {%if node.edited == False%}hide{%endif%}" data-parent-id="{{ node.id }}" style="color:#007bff;">{% trans 'edited' %}</h6>       
+                  </div>
+                </div>
+              </div>
+            <div class="card-body">
+                <div class="row textval">
+                  <div class="col-sm-12">{{ node.raw_comment|safe }}</div>
+                </div>
+                
+                <div class="row textedit" hidden>
+                  <textarea class="form-control" id="commentContentEdit" rows="3"></textarea>
+                </div>
+
+                <div class="row editbuttons" hidden>
+                    <div class="col-sm-12 text-right reply-link reply-container">
+                        <a href="javascript:void(0)" class="btn btn-secondary" style="margin-top:5;" data-idea-id="{{idea_id}}" data-parent-id="{{ node.id }}" name="cancelEdit">{% trans 'Cancel' %}</a> 
+                        <a href="javascript:void(0)" class="btn btn-primary" style="margin-top:5;" data-idea-id="{{idea_id}}" data-parent-id="{{ node.id }}" name="saveEdit">{% trans 'Save' %}</a> 
+                      </div>
+                </div>
+                  
+                <div class="row textbuttons">
+                  <div class="col-sm-12 text-right reply-link reply-container">
+                      <a href="javascript:void(0)" data-idea-id="{{idea_id}}" data-parent-id="{{ node.id }}" name="replyButton">{% trans 'reply' %}</a> 
+                      <a href="javascript:void(0)" data-idea-id="{{idea_id}}" data-parent-id="{{ node.id }}" name="replyEdit" hidden>| {% trans 'editar' %}</a> 
+                      <a href="javascript:void(0)" data-idea-id="{{idea_id}}" data-parent-id="{{ node.id }}" name="replyDelete" data-string="{% trans 'This action can not be undone. All replies will also be deleted. Do you want to delete the comment?' %}" hidden>| {% trans 'excluir' %}</a>
+                  </div>
+                </div>
+            </div>
+          </div>
+          {% if not node.is_leaf_node %}
+          <div class="reply pl-3 pt-2">
+            {{ children }}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endrecursetree %}
+  </div>
+  <div id="commentsPermission" comments_edit_permision="{{comments_edit_permision}}" comments_id_list="{{comments_id_list}}" hidden ></div>
+  {% include 'ideax/includes/partial_modal_delete_comment.html' %}

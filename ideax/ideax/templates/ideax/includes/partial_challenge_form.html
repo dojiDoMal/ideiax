@@ -1,0 +1,91 @@
+{% load widget_tweaks %}
+
+<div class="form-group{% if form.title.errors %} has-error{% endif %}">
+  <label for="{{form.title.id_for_label}}">{{form.title.label}}</label>
+  {{ form.title|add_class:'form-control' }}
+  {% for error in form.title.errors %}
+    <p class="help-block">{{ error }}</p>
+  {% endfor %}
+</div>
+
+<div class="form-group{% if form.image.errors %} has-error{% endif %}">
+  <label for="{{form.image.id_for_label}}">{{form.image.label}}</label>
+  {{ form.image|add_class:'form-control' }}
+  {% for error in form.image.errors %}
+    <p class="help-block">{{ error }}</p>
+  {% endfor %}
+</div>
+
+<div class="form-group{% if form.summary.errors %} has-error{% endif %}">
+  <label for="{{form.summary.id_for_label}}">{{form.summary.label}}</label>
+  {{ form.summary|add_class:'form-control' }}
+  {% for error in form.summary.errors %}
+    <p class="help-block">{{ error }}</p>
+  {% endfor %}
+</div>
+
+<div class="form-group{% if form.requester.errors %} has-error{% endif %}">
+  <label for="{{form.requester.id_for_label}}">{{form.requester.label}}</label>
+  {{ form.requester|add_class:'form-control' }}
+  {% for error in form.requester.errors %}
+    <p class="help-block">{{ error }}</p>
+  {% endfor %}
+</div>
+
+<div class="form-group{% if form.description.errors %} has-error{% endif %}">
+  <label for="{{form.description.id_for_label}}">{{form.description.label}}</label>
+  {{ form.description|add_class:'form-control' }}
+  {% for error in form.description.errors %}
+    <p class="help-block">{{ error }}</p>
+  {% endfor %}
+</div>
+
+<div class="form-group{% if form.init_date.errors %} has-error{% endif %}">
+    <label for="{{form.init_date.id_for_label}}">{{form.init_date.label}}</label>
+    {{ form.init_date }}
+    {% for error in form.init_date.errors %}
+      <p class="help-block">{{ error }}</p>
+    {% endfor %}
+</div>
+
+<div class="form-group{% if form.limit_date.errors %} has-error{% endif %}">
+  <label for="{{form.limit_date.id_for_label}}">{{form.limit_date.label}}</label>
+  {{ form.limit_date }}
+  {% for error in form.limit_date.errors %}
+    <p class="help-block">{{ error }}</p>
+  {% endfor %}
+</div>
+
+<div class="form-group{% if form.active.errors %} has-error{% endif %}">
+  <label for="{{form.active.id_for_label}}">{{form.active.label}}</label>
+  {{ form.active|add_class:'form-control' }}
+  {% for error in form.active.errors %}
+    <p class="help-block">{{ error }}</p>
+  {% endfor %}
+</div>
+
+<div class="form-group{% if form.featured.errors %} has-error{% endif %}">
+  <label for="{{form.featured.id_for_label}}">{{form.featured.label}}</label>
+  {{ form.featured|add_class:'form-control' }}
+  {% for error in form.featured.errors %}
+    <p class="help-block">{{ error }}</p>
+  {% endfor %}
+</div>
+
+<div class="form-group{% if form.category.errors %} has-error{% endif %}">
+  <label for="{{form.category.id_for_label}}">{{form.category.label}}</label>
+  {{ form.category|add_class:'form-control' }}
+  {% for error in form.category.errors %}
+    <p class="help-block">{{ error }}</p>
+  {% endfor %}
+</div>
+
+<div class="form-group{% if form.hidden_fields.errors %} has-error{% endif %}">
+
+    {% for hidden in form.hidden_fields %}
+      {{ hidden|add_class:'form-control' }}
+    {% endfor %}
+    {% for error in form.hidden_fields.errors %}
+      <p class="help-block">{{ error }}</p>
+    {% endfor %}
+</div>

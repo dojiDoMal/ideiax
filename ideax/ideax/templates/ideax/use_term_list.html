@@ -1,0 +1,28 @@
+{% extends 'ideax/base.html' %}
+{% load staticfiles i18n %}
+
+{%block contextbutton%}
+<div class="fab-button">
+  <a class="btn btn-idea-new btn-primary" href="/useterm/new/" title="{% trans 'New Term of Use' %}"><i class="fas fa-plus"></i><i class="far fa-file-alt fa-2x"></i></a>
+</div>
+{% endblock %}
+{% block content %}
+  <div class="idea-list-bg">
+      <h1 style="font-size:45px">{% trans 'Terms of Use' %}</h1>
+  </div>
+
+  <div class="container">
+    {% for message in messages %}
+      <div class="alert alert-dismissible alert-{% if message.tags == 'error' %}danger{%else%}{{message.tags}}{%endif%}">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ message }}
+      </div>
+    {% endfor %}
+
+    <div id="use_term-list">
+      {% include 'ideax/includes/partial_use_term_list.html' %}
+    </div>
+
+  </div>
+
+{% endblock %}

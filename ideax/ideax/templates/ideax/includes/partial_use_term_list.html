@@ -1,0 +1,32 @@
+{% load widget_tweaks i18n %}
+  <table class="table table-term-of-use">
+    <thead>
+      <tr>
+        <th>{% trans 'Creator' %}</th>
+        <th>{% trans 'Term' %}</th>
+        <th>{% trans 'Initial Date' %}</th>
+        <th>{% trans 'Final Date' %}</th>
+        <th>{% trans 'Status' %}</th>
+        <th>{% trans 'Edit' %}</th>
+        <th>{% trans 'Discard' %}</th>
+        <th>{% trans 'Detail' %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for use_term in use_term_list %}
+        <tr>
+          <td>{{ use_term.creator.user }}</td>
+          <td class="terms-of-use-break-line" >{{ use_term.term|truncatechars:140|safe }}</td>
+          <td>{{ use_term.init_date|date:"d/m/Y" }}</td>
+          <td>{{ use_term.final_date|date:"d/m/Y" }} </td>
+          <td>{% if use_term.is_past_due %}{% trans 'Active' %}{% else %}{% trans 'Inactive' %}{% endif %}</td>
+          <div class="button-group">
+            <td><button type="button" class="btn" onclick="location.href='{% url 'use_term_edit' pk=use_term.pk %}';"><i class="fa fa-edit"></i></button></td>
+            <td><button type="button" class="delete btn btn-click-del-use-term" data-string="{% trans 'Would you like to delete ' %}" data-name="{% trans 'the terms of use' %}" data-id="{{use_term.pk}}" id="btn-confirm-deletion" ><i class="fa fa-trash"></i></button></td>
+            <td><button type="button" class="btn" onclick="location.href='{% url 'use_term_detail' pk=use_term.pk %}';"><i class="fa fa-search"></i></button></td>
+          </div>
+        </tr>
+      {% endfor %}
+  </tbody>
+  </table>
+  {% include 'ideax/includes/partial_modal_delete.html' %}

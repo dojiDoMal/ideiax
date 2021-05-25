@@ -1,0 +1,120 @@
+{% extends 'ideax/base.html' %}
+{% load i18n staticfiles %}
+{% load notifications_tags %}
+{% notifications_unread as unread_count %}
+{% load gravatar %}
+{% block content %}
+<div class="scrolltop">
+    <a class="scroll icon" title="{% trans 'Back to top' %}" class="btn-floating grey"><i class="fas fa-chevron-up"></i></a>
+</div>
+
+    <div class="profile-bg thetop">
+        <div class="profile-objects">
+            <div class="profile-info">
+                <div class="avatar" >
+                    {% gravatar userP.email 130 %}
+                </div>
+                <div class="profile-name">
+                    {{ userP.get_full_name|default:userP.username }}
+                </div>
+                <div class="profile-email">
+                    {{ userP.email }}
+                </div>
+                    <span class="col-lg-6">
+                        {% if ideas|length == 0 %}
+                            {% trans 'No ideas' %}
+                        {% endif %}
+                        {% if ideas|length == 1 %}
+                            {% trans 'Author of one idea' %}
+                        {% endif %}
+                        {% if ideas|length > 1 %}
+                            {% trans 'Author of' %} {{ ideas|length }} {% trans 'ideas' %}
+                        {% endif %}
+                    </span>
+            </div>
+
+            <div class="container">
+                <hr>
+                <div class="row">
+                    <div style="padding-left: 400px;" class="liked-ideas col-lg-6">
+                        {{ popular_vote }}
+                    </div>
+                    <div style="padding-right: 400px;" class="liked-ideas col-lg-6">
+                        {{ comments }}
+                    </div>
+                    <div style="color: #ffffff; text-align: center; padding-left: 400px;" class="col-lg-6">
+                        <span>
+                            likes
+                        </span>
+                    </div>
+                    <div style="color: #ffffff; text-align: center; padding-right: 400px;" class="col-lg-6">
+                        <span>
+                            coments
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div style="padding-top: 15px;">
+            {%if not ideas %}
+            {% include 'ideax/includes/profile_idea.html' %}
+            {%else%}
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators" style="margin-bottom: 3px;">
+                {% for i in challenges %}
+                <li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter }}" class="{%if forloop.counter == 1%} active {%endif%}"></li>
+                {% endfor%}
+            </ol>
+            <div class="carousel-inner">
+                {% for challenge in challenges %}
+                <div class="carousel-item {%if forloop.counter == 1%} active {%endif%}">
+
+
+                    <img class="d-block w-100" src="{{challenge.image.url}}" alt="First slide">
+
+
+                <a href="{% url 'challenge_detail' challenge_pk=challenge.pk %}">
+                    <div class="carousel-caption d-none d-md-block carousel-challenge" >
+                    <h5>{{challenge.title}}</h5>
+                    <p>{{challenge.summary}}</p>
+                    </div>
+                </a>
+
+                </div>
+                {%endfor%}
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <div class="empty-filter"></div>
+
+        <div class="grid" id="idea-list-group">
+            {% for idea in ideas %}
+            {% include 'ideax/includes/idea_detail.html' %}
+            {% endfor %}
+        </div>
+
+        {% if ideas.has_next %}
+            <a class="infinite-more-link" href="?page={{ ideas.next_page_number }}"></a>
+        {% endif %}
+
+        <div class="loading" style="display: none; text-align: center">
+            <img src="{% static 'images/loading.gif' %}" alt=""> Loading...
+            <!--animation icon 'eclipse' is provided by loading.io-->
+        </div>
+
+
+        {%endif%}
+        {% include 'ideax/includes/modals.html' %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% load mptt_tags %}
+{% load widget_tweaks i18n %}
+{% load humanize %}
+<!-- Modal -->
+<div class="modal fade" id="modalRelationShip" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p class="modal-title" id="LabelModalDelete">{% trans 'Do you want to delete the relationship from this idea?' %}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="modal-btn-yes-relationship">{% trans 'Yes' %}</button>
+                <button type="button" class="btn btn-primary" id="modal-btn-no-relationship">{% trans 'No' %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+ 

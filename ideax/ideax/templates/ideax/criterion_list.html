@@ -1,0 +1,46 @@
+{% extends 'ideax/base.html' %}
+{% load i18n %}
+
+{%block contextbutton%}
+<div class="fab-button">
+    <a class="btn btn-idea-new btn-primary" href="/criterion/new/" title="{% trans 'New Criterion' %}"><i class="fas fa-plus"></i><i
+            class="fas fa-list-alt fa-2x"></i></a>
+</div>
+{% endblock %}
+{% block content %}
+<div class="idea-list-bg">
+    <h1 class="display-3">{% trans 'Criterion List' %}</h1>
+</div>
+<div class="container">
+    {% for message in messages %}
+    <div class="alert alert-dismissible alert-{% if message.tags == 'error' %}danger{%else%}{{message.tags}}{%endif%}">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{% trans 'Description' %}</th>
+                <th>{% trans 'Weight' %}</th>
+                <th>{% trans 'Edit' %}</th>
+                <th>{% trans 'Discard' %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for criterion in criterions %}
+            <tr>
+                <td>{{criterion.description}}</td>
+                <td>{{ criterion.peso }}</td>
+                <td><button type="button" class="btn" onclick="location.href='{% url 'criterion_edit' pk=criterion.pk %}';"><i
+                            class="fa fa-edit"></i></button></td>
+
+                <td><button type="button" class="delete btn btn-click-del-criterion" data-string="{% trans 'Would you like to delete ' %}" data-name="{% trans 'the criterion' %}" data-id="{{criterion.pk}}"
+                        id="btn-confirm-deletion"><i class="fa fa-trash"></i></button></td>
+                {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% include 'ideax/includes/partial_modal_delete.html' %}
+
+{% endblock %}

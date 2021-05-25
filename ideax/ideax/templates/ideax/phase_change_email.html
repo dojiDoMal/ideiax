@@ -1,0 +1,28 @@
+{% load staticfiles i18n %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body>
+    Prezado, {{idea.author.user.first_name}}!
+
+    A sua ideia <b>{{idea.title}}</b> foi selecionada para a seguinte etapa: <b>{{phase}}</b>.
+
+    Continue acompanhando o andamento e os comentários no Ideia<sup>x</sup>.
+
+    Qualquer dúvida estamos a disposição.
+
+    []s
+
+    <b>DEIN - Departamento de Inovação</b>
+    <b>DIEP - Divisão de Estruturação, Processos e Tecnologia para inovação</b>
+    <b>DATAPREV</b>
+    E-mail: inovacao@dataprev.gov.br
+    Telegram: https://t.me/InovacaoDataprev
+</body>
+
+</html>

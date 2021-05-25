@@ -1,0 +1,41 @@
+{% extends 'ideax/base.html' %}
+{% load i18n staticfiles %}
+{% load gravatar %}
+{% block content %}
+<div class="idea-list-bg">
+    <h1 class="display-3 d-none d-md-block">{% trans 'Who Innovates' %}</h1>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="btn-group float-right">
+                
+            </div>
+        </div>
+        <div style="padding-top: 20px;" class="staff-items">
+            <div class="staff-card" >
+                <div id="innovator-container" class="innovates staff-items">
+                    <section  id="innovator-container">
+                        {% for idea in ideas %}
+                            <div style="width:200 !important; height: 260 !important; padding-top: 10px;" class="staff-item" data-like="{{idea.count_like}}" data-dislike="{{idea.count_dislike}}">
+                                <div class="container">
+                                    <a href="{% url 'users:profile' username=idea.author__user__username %}" class="avatar" style="padding-top: 10px;">
+                                        {% gravatar idea.author__user__email 128 %}
+                                    </a>
+                                    <h2>{{idea.author__user__username|truncatechars:15}}</h2>
+                                    <div class="description">
+                                        <ul class="staff-icon">
+                                            <li><a style="font-size: 25px;" href="#" class="qtdIdeas">{{idea.qtd}}<i class="far fa-lightbulb"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

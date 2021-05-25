@@ -1,0 +1,49 @@
+{% extends 'ideax/base.html' %}
+{% load widget_tweaks i18n %}
+
+{% block content %}
+<div class="idea-list-bg">
+    <h1 class="display-3"><font size = "10"> {% trans 'Update Idea Phase' %}</font></h1>
+</div>
+<div class="container">
+  {% for message in messages %}
+    <div class="alert alert-dismissible alert-{% if message.tags == 'error' %}danger{%else%}{{message.tags}}{%endif%}">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ message }}
+    </div>
+  {% endfor %}
+  <form method="post" class="js-category-update-form"
+  action="{% url 'ideaphase_edit' form.instance.pk %}">
+    {% csrf_token %}
+    <div class="form-group{% if form.name.errors %} has-error{% endif %}">
+      <label for="{{form.name.id_for_label}}">{{form.name.label}}</label>
+      {{ form.name|add_class:'form-control' }}
+      {% for error in form.name.errors %}
+        <p class="help-block">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="form-group{% if form.description.errors %} has-error{% endif %}">
+      <label for="{{form.description.id_for_label}}">{{form.description.label}}</label>
+      {{ form.description|add_class:'form-control' }}
+      {% for error in form.description.errors %}
+        <p class="help-block">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="form-group{% if form.description.errors %} has-error{% endif %}">
+      <label for="{{form.order.id_for_label}}">{{form.order.label}}</label>
+      {{ form.order|add_class:'form-control' }}
+      {% for error in form.order.errors %}
+        <p class="help-block">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="button-group">
+      <a href="{% url 'ideaphase_list' %}">{% trans 'Return' %}</a>
+      <button type="submit" class="btn btn-primary">{% trans 'Update' %}</button>
+    </div>
+
+  </form>
+</div>
+{% endblock %}

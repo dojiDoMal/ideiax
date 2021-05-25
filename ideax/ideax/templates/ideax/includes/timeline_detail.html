@@ -1,0 +1,56 @@
+{% load widget_tweaks i18n %}
+{% load humanize %}
+
+<div class="container">
+    <ul class="timeline">
+        {% for timeline_idea in timeline %}
+
+        {% if timeline_idea.evaluation_date %}
+        <li>
+            <div class="timeline-badge Success"><i class="fas fa-check"></i></div>
+            <div class="timeline-panel">
+                <div class="timeline-heading">
+                    <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i>
+                        {{timeline_idea.evaluation_date}}</small></p>
+                </div>
+                <div class="timeline-body">
+                    <p>{% trans 'This idea was' %} <span class='highlight'>{% trans 'evaluated' %}</span></p>
+                </div>
+            </div>
+        </li>
+        {% endif %}
+
+
+        {% if timeline_idea.previous_phase == 0 %}
+        <li>
+            <div class="timeline-badge"><i class="far fa-lightbulb"></i></div>
+            <div class="timeline-panel">
+                <div class="timeline-heading">
+                    <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i>
+                            {{timeline_idea.idea.creation_date}}</small></p>
+                </div>
+                <div class="timeline-body">
+                    <p>{{timeline_idea.author}} {% trans 'created the idea' %}: <span class='highlight'>{{timeline_idea.idea.title}}</span>
+                </div>
+            </div>
+        </li>
+        {% endif %}
+
+        {% if timeline_idea.current_phase != timeline_idea.previous_phase and timeline_idea.previous_phase != 0 %}
+        <li>
+            <div class="timeline-badge warning"><i class="fas fa-exchange-alt"></i></div>
+            <div class="timeline-panel">
+                <div class="timeline-heading">
+                    <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{timeline_idea.date_change}}</small></p>
+                </div>
+                <div class="timeline-body">
+                    <p>{% trans 'changed the idea phase to' %}
+                    <span class='highlight'>{{timeline_idea.current_phase}}</span>
+                </div>
+            </div>
+        </li>
+        {% endif %}
+
+        {% endfor %}
+    </ul>
+</div>

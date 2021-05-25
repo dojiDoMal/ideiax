@@ -1,0 +1,58 @@
+{% extends 'ideax/base.html' %}
+{% load widget_tweaks i18n %}
+{% load staticfiles %}
+
+{%block contextbutton%}
+{% endblock %}
+
+{% block content %}
+
+<div class="idea-list-bg">
+    <h1 class="display-3">{% trans 'User Permissions' %}</h1>
+</div>
+<div class="container">
+  {% for message in messages %}
+    <div class="alert alert-dismissible alert-{% if message.tags == 'error' %}danger{%else%}{{message.tags}}{%endif%}">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        {{ message }}
+    </div>
+  {% endfor %}
+
+  <form action='{% url 'users:edit-permission' username=usuario.username %}' method="POST">
+    {% csrf_token %}
+    <div class="form-group{% if form.groups.errors %} has-error{% endif %} groups">
+      {{ form.media }}
+
+      <label for="{{form.groups.id_for_label}}" class="form-control-lg"><strong>{% trans 'User' %}:</strong> {{usuario.username}}</label>
+      <div class="row justify-content-center">
+      {{ form.groups|add_class:'form-control' }}
+      </div>
+
+    </div>
+    <div class="button-group">
+          <a class="back-redirect btn" href="{% url 'users:select-permission' %}">{% trans 'Return' %}</a>
+          <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
+        </div>
+  </form>
+</div>
+
+{% endblock %}
+{% block footer %}
+<script type="text/javascript" src="{% static 'plugins/js/resizable.min.js' %}"></script>
+<script src="{% static '/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript">
+  // <![CDATA[
+  var bootstrapButton = $.fn.button.noConflict();
+  var bootstrapAlert = $.fn.alert.noConflict();
+  var bootstrapCarousel = $.fn.carousel.noConflict();
+  var bootstrapCollapse = $.fn.collapse.noConflict();
+  var bootstrapDropdown = $.fn.dropdown.noConflict();
+  var bootstrapModal = $.fn.modal.noConflict();
+  var bootstrapTooltip = $.fn.tooltip.noConflict();
+  var bootstrapPopover = $.fn.popover.noConflict();
+  var bootstrapScrollspy = $.fn.scrollspy.noConflict();
+  var bootstrapTab = $.fn.tab.noConflict();
+  var bootstrapAffix = $.fn.affix.noConflict();
+  // ]]>
+  </script>
+{% endblock %}

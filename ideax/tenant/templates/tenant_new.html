@@ -1,0 +1,77 @@
+{% extends 'ideax/base.html' %}
+{% load widget_tweaks i18n %}
+
+{%block contextbutton%}
+{% endblock %}
+
+{% block content %}
+
+<div class="idea-list-bg">
+    <h1 class="display-3">{% trans 'Tenant New' %}</h1>
+</div>
+<div class="container">
+  {% for message in messages %}
+    <div class="alert alert-dismissible alert-{% if message.tags == 'error' %}danger{%else%}{{message.tags}}{%endif%}">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        {{ message }}
+    </div>
+  {% endfor %}
+
+
+  <form method="post" class="form post-form" action="{% url 'tenant:new-tenant' %}">
+    {% csrf_token %}
+    <div class="form-group{% if form.name.errors %} has-error{% endif %}">
+      <label for="{{form.name.id_for_label}}">{{form.name.label}}</label>
+      {{ form.name|add_class:'form-control' }}
+      {% for error in form.name.errors %}
+        <p class="help-block">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="form-group{% if form.domain_url.errors %} has-error{% endif %}">
+      <label for="{{form.domain_url.id_for_label}}">{{form.domain_url.label}}</label>
+      {{ form.domain_url|add_class:'form-control'|attr:_('placeholder:domain without www') }}
+      {% for error in form.domain_url.errors %}
+        <p class="help-block">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="form-group{% if form.schema_name.errors %} has-error{% endif %}">
+      <label for="{{form.schema_name.id_for_label}}">{{form.schema_name.label}}</label>
+      {{ form.schema_name|add_class:'form-control' }}
+      {% for error in form.schema_name.errors %}
+        <p class="help-block">{{ error }}</p>
+      {% endfor %}
+    </div>    
+
+    <div class="form-group{% if form.on_trial.errors %} has-error{% endif %}">
+      <label for="{{form.on_trial.id_for_label}}">{{form.on_trial.label}}</label>
+      {{ form.on_trial|add_class:'form-control'|attr:_('placeholder:on_trial') }}
+      {% for error in form.on_trial.errors %}
+        <p class="help-block">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="form-group{% if form.email.errors %} has-error{% endif %}">
+      <label for="{{form.email.id_for_label}}">{{form.email.label}}</label>
+      {{ form.email|add_class:'form-control'|attr:_('placeholder:email_admin') }}
+      {% for error in form.email.errors %}
+        <p class="help-block">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="form-group{% if form.password.errors %} has-error{% endif %}">
+      <label for="{{form.password.id_for_label}}">{{form.password.label}}</label>
+      {{ form.password|add_class:'form-control'|attr:_('placeholder:password_admin') }}
+      {% for error in form.password.errors %}
+        <p class="help-block">{{ error }}</p>
+      {% endfor %}
+    </div>    
+
+    <div class="button-group">      
+      <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,75 @@
+<!-- {% load widget_tweaks i18n %} -->
+{% load staticfiles i18n %}
+{% load martortags %}
+
+
+<div class="card grid-item idea-cards infinite-item">
+   <div class="img-dimension">
+     <img class="card-img-top" src="{{idea.category_image}}" alt="Card image cap"/>
+    </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ idea.title |truncatechars:125 }}</h5>
+    <span class="creation-order d-none">{{idea.id}}</span>
+        <div class="card-text">
+            {% if idea.summary %}
+            {{idea.summary|truncatechars:140|safe_markdown}}
+            {% else %}
+            {{ idea.solution|truncatechars:140|safe_markdown }}
+            {% endif %}
+        </div>
+        <div class="text-left">
+            <a id="idea_detail_{{idea.pk}}" href="{% url 'idea_detail' pk=idea.pk %}">{% trans 'Details...' %}</a>
+        </div>
+
+        <div class="text-right card-icons">
+            <span class="badge badge-secondary">{{ idea.get_current_phase.description }}</span>
+            <a class="like badge" onclick="vote('{% url 'like_ideia' pk=idea.pk %}', '.liked_idea_{{idea.id}}', '.disliked_idea_{{idea.id}}', '.like_{{idea.id}}', '.dislike_{{idea.id}}')" href="javascript:void(0)">
+                <i class="{%if idea.id in ideas_liked %} fas {% else %} far {% endif %} fa-thumbs-up like_{{idea.id}}" ></i>
+                <span class="liked_idea_{{idea.id}} liked_votes">
+                {{ idea.count_likes }}
+                </span>
+            </a>
+            <a class="dislike badge" onclick="vote('{% url 'dislike_ideia' pk=idea.pk %}', '.liked_idea_{{idea.id}}', '.disliked_idea_{{idea.id}}', '.like_{{idea.id}}', '.dislike_{{idea.id}}')" href="javascript:void(0)">
+                <i class="{%if idea.id in ideas_disliked %} fas {% else %} far {% endif %} fa-thumbs-down dislike_{{idea.id}}"></i>
+                <span class="disliked_idea_{{idea.id}} disliked_votes">
+                {{ idea.count_dislikes }}
+                </span>
+            </a>
+            <a href="#" class="badge comments">
+                <i class="fas fa-comments"></i> {{idea.comment_set.all.count}}
+            </a>
+        </div>
+ </div>
+  <div class="card-footer">
+    <div class="row">
+      <!--div class="col-sm-8 text-left">
+        <button class="btn btn-link"><small class="text-muted"></small></button>
+         <a href="#"><small class="text-muted">{% trans 'By' %} @{{idea.author.user}}</small></a>       </div-->
+        <div class="col-sm-12 text-right pl-1">
+            {%if perms.ideax.manage_idea or idea.id in ideas_created_by_me %}
+                <div class="btn-group dropup">
+                <button type="button" class="btn btn-sm btn-secondary dropdown-toggle button-card-idea" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right text-right">
+                    {%if perms.ideax.manage_idea %}
+                    <h6 class="dropdown-header">{% trans 'Idea Stage' %}</h6>
+                    {% for value in idea_phase %}
+                        <button id="idea_phase_change_to_{{ value.id }}" class="dropdown-item" onclick="location.href='{% url 'change_phase' pk=idea.pk new_phase=value.id%}';" type="button">{{value}}</button>
+                    {% endfor %}
+
+                    <div class="dropdown-divider"></div>
+                    {%endif%}
+                    {%if perms.ideax.manage_idea or idea.id in ideas_created_by_me %}
+                    <h6 class="dropdown-header">{% trans 'Actions' %}</h6>
+                    <button id="idea_edit_{{idea.pk}}" class="dropdown-item" onclick="location.href='{% url 'idea_edit' pk=idea.pk %}';" type="button">{% trans 'Edit' %}</button>
+                    <button id="idea_remove_{{idea.pk}}" class="dropdown-item js-remove-idea" data-modal="#modal-idea-crud" data-url="{% url 'idea_remove' pk=idea.pk %}" type="button">{% trans 'Delete' %}</button>
+                    {%endif%}
+                </div>
+                </div>
+            {%endif%}
+        </div>
+    </div>
+  </div>
+
+</div>

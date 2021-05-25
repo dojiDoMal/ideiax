@@ -1,0 +1,47 @@
+{% extends 'ideax/base.html' %}
+{% block top %}
+{% endblock %}
+{% load staticfiles i18n %}
+
+{% block content %}
+
+    <div class="brief-explanation">
+      <h1>{% trans 'Sharing ideas!' %}</h1>
+      <p>{% trans "An open innovation management platform to encourage the participation of the organization's people in the process of creating new solutions" %}</p>
+      <p>{% trans 'Do you want to implement or improve an innovation management process within your organization?' %}<br/>
+        <a href="https://servicos.dataprev.gov.br/vitrine/#/ideiax" target="_blank">{% trans 'Click for more information' %}</a></p>
+      <p>{% trans 'Are you part of our community?' %}<br/>
+         {% trans 'Enter and register an idea!' %}</p>
+      <div class="login-button">
+          <button type="button" onclick="location.href='{% url 'users:login' %}';" class="btn btn-warning">{% trans 'Login' %}</button>
+      </div>
+    </div>
+    <div class="idea-launch">
+      <div class="launch-text col-md-12 col-lg-6">
+          <h2>{% trans 'Launch your ideas for everyone!' %}</h2>
+          <p>{% trans 'Ideia<sup>X</sup> is the channel to spread and share your ideas, allowing your peers to contribute, discuss and collaborate to grow it.' %}</p>
+          <p>{% trans 'In the same way, you can see other posted ideas, interacting with your opinion and asking to further improve them!' %}</p>
+      </div>
+      <div class="launch-image col-md-12 col-lg-6" style="text-align: center;">
+          <img src="../../static/images/stick_man.png">
+      </div>
+
+    </div>
+
+    <div class="functionality">
+      <div class="function-list">
+        <div class="function-item">
+          <h3>{% trans 'Register Ideas' %}</h3>
+          <p>{% trans 'All company employees can collaborate. Innovation can come from everyone.' %}</p>
+        </div>
+        <div class="function-item">
+          <h3>{% trans 'Manage Ideas' %}</h3>
+          <p>{% trans 'Ideas will be organized, refined and evaluated, allowing a flow for the innovation management.' %}</p>
+        </div>
+        <div class="function-item">
+          <h3>{% trans 'Integration' %}</h3>
+          <p>{% trans 'Through APIs is possible to integrate the Idea<sup>X</sup> with other tools.' %}</p>
+        </div>
+      </div>
+    </div>
+{% endblock %}

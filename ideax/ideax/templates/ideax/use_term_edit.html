@@ -1,0 +1,63 @@
+{% extends 'ideax/base.html' %}
+{% load widget_tweaks i18n %}
+
+{% block content %}
+
+<div class="idea-list-bg">
+    <h1 class="display-3">{% trans 'Update Term of Use' %}</h1>
+</div>
+
+
+<div class="container">
+
+  {% for message in messages %}
+    <div class="alert alert-dismissible alert-{% if message.tags == 'error' %}danger{%else%}{{message.tags}}{%endif%}">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ message }}
+    </div>
+  {% endfor %}
+
+  <form method="post" class="js-use_term-update-form"
+  action="{% url 'use_term_edit' form.instance.pk %}">
+    {% csrf_token %}
+    <div class="form-group{% if form.creator.errors %} has-error{% endif %}">
+      <label for="{{form.creator.id_for_label}}">{{form.creator.label}}</label>
+      {{ form.creator|add_class:'form-control' }}
+      {% for error in form.creator.errors %}
+        <p class="help-block">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="form-group{% if form.term.errors %} has-error{% endif %}">
+      <label for="{{form.term.id_for_label}}">{{form.term.label}}</label>
+      {{ form.term|add_class:'form-control' }}
+      {% for error in form.term.errors %}
+        <p class="help-block">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="form-group{% if form.init_date.errors %} has-error{% endif %}">
+      <label for="{{form.init_date.id_for_label}}">{{form.init_date.label}}</label>
+      {{ form.init_date|add_class:'form-control' }}
+      {% for error in form.init_date.errors %}
+        <p class="help-block">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="form-group{% if form.final_date.errors %} has-error{% endif %}">
+      <label for="{{form.final_date.id_for_label}}">{{form.final_date.label}}</label>
+      {{ form.final_date|add_class:'form-control' }}
+      {% for error in form.final_date.errors %}
+          <p class="help-block">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="button-group">
+      <a href="{% url 'use_term_list' %}">{% trans 'Return' %}</a>
+      <button type="submit" class="btn btn-primary">{% trans 'Update' %}</button>
+    </div>
+
+  </form>
+</div>
+
+{% endblock %}

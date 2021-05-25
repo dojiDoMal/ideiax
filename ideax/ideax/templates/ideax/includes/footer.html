@@ -1,0 +1,11 @@
+{% load staticfiles i18n %}
+{% include 'ideax/includes/chatbot.html' %}
+
+<nav class="navbar {% if not user.is_authenticated %} navbar-dark bg-dark {% else %} navbar-light bg-light {% endif %}footer shadow-sm">
+  <button type="button" class="btn" onclick="location.href='{% url 'rss' %}';" style="background: grey;"><i class="fas fa-rss"></i></button>
+  <span class="navbar-text mx-auto">
+    <tbody>
+      <span class="alpha-version" style="font-size:80%;" >Idea<sup>X</sup> - Version {{IDEAX_VERSION}}</span>
+    </tbody>
+  </span>
+</nav>

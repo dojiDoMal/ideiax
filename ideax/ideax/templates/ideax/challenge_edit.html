@@ -1,0 +1,72 @@
+{% extends 'ideax/base.html' %}
+{% load widget_tweaks i18n %}
+{% load staticfiles %}
+
+{%block contextbutton%}
+{% endblock %}
+{% block content %}
+  <div class="challenge-list-bg">
+      <h1 class="display-3">{% trans 'Edit Challenge' %}</h1>
+  </div>
+  <div class="container">
+      <form method="post" class="form post-form" action="{% url 'challenge_edit' form.instance.pk %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% include 'ideax/includes/partial_challenge_form.html' %}
+        <div class="button-group">
+          <a href="{% url 'challenge_list' %}">{% trans 'Return' %}</a>
+          <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
+        </div>
+      </form>
+      <div class="modal fade" id="modalCrop">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title">Crop the photo</h4>
+            </div>
+            <div class="modal-body">
+              <img src="" id="image" style="max-width: 100%;">
+            </div>
+            <div class="modal-footer">
+              <div class="btn-group pull-left" role="group">
+                <button type="button" class="btn btn-default js-zoom-in">
+                  <i class="fas fa-search-plus"></i>
+                </button>
+                <button type="button" class="btn btn-default js-zoom-out">
+                  <i class="fas fa-search-minus"></i>
+                </button>
+              </div>
+              <div>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Nevermind</button>
+                <button type="button" class="btn btn-primary js-crop-and-upload">Crop and upload</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+{% endblock %}
+{% block footer %}
+<script type="text/javascript" src="{% static 'plugins/js/resizable.min.js' %}"></script>
+<script type="text/javascript">
+  // <![CDATA[
+  var bootstrapButton = $.fn.button.noConflict();
+  var bootstrapAlert = $.fn.alert.noConflict();
+  var bootstrapCarousel = $.fn.carousel.noConflict();
+  var bootstrapCollapse = $.fn.collapse.noConflict();
+  var bootstrapDropdown = $.fn.dropdown.noConflict();
+  var bootstrapModal = $.fn.modal.noConflict();
+  var bootstrapTooltip = $.fn.tooltip.noConflict();
+  var bootstrapPopover = $.fn.popover.noConflict();
+  var bootstrapScrollspy = $.fn.scrollspy.noConflict();
+  var bootstrapTab = $.fn.tab.noConflict();
+  var bootstrapAffix = $.fn.affix.noConflict();
+  // ]]>
+</script>
+<script src="{% static '/js/bootstrap.min.js' %}"></script>
+<script src="{% static '/js/cropper.min.js' %}"></script>
+
+{% endblock %}

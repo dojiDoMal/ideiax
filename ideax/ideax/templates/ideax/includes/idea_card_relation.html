@@ -1,0 +1,21 @@
+<!-- {% load widget_tweaks i18n %} -->
+{% load staticfiles i18n %}
+{% load martortags %}
+  
+<div class="card mb-2 col-x-4" card-id="{{idea.pk}}">
+    <div class="card-body">
+        <h5 class="card-title">{{ idea.title |truncatechars:125 }}</h5>
+        <span class="creation-order d-none">{{idea.id}}</span>
+        
+        <div class="card-text">
+            {% if idea.summary %}
+            {{idea.summary|truncatechars:140|safe_markdown}}
+            {% else %}
+            {{ idea.solution|truncatechars:140|safe_markdown }}
+            {% endif %}
+        </div>
+        <div class="text-left">
+            <a id="idea_detail_{{idea.pk}}" href="{% url 'idea_detail' pk=idea.pk %}">{% trans 'Details...' %}</a>
+        </div>
+    </div>
+</div>

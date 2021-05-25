@@ -1,0 +1,22 @@
+{% extends 'ideax/base.html' %}
+{% load staticfiles i18n %}
+
+{%block contextbutton%}
+{% endblock %}
+
+{% block content %}
+
+<div class="challenge-list-bg" id="idea-title">
+  <h1>{% trans 'Term Of Use' %}</h1>
+</div>
+
+<div class="container">
+  <div class="use-term-paragraph">
+    {% if use_term.term%}
+      {{ use_term.term|safe }}
+    {% else %}
+      {{ use_term|safe }}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

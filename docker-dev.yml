@@ -1,0 +1,28 @@
+version: '3.7'
+
+volumes:
+  ideax_media:
+  my_data:
+
+services:
+  mydb:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql_password
+    volumes:
+      - my_data:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+  ideax:
+    build:
+      context: .
+      dockerfile: dev/Dockerfile
+    env_file: .env
+    command: sh /app/docker-entrypoint.sh
+    volumes:
+      - .:/app:rw
+      - ideax_media:/var/www/ideax/media
+    working_dir: /app
+    ports:
+      - 8000:8000

@@ -1,0 +1,73 @@
+{% load widget_tweaks i18n %}
+{% load humanize %}
+{% block content %}
+ 
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+<div class="container">
+  <div class="row">
+        <h4>{% trans 'Relationship of Ideas' %}</h4>
+        <div id="idea-search" class="input-group mb-3">
+            <input id="search_part" type="text" class="form-control" placeholder="{% trans 'Search for author, category, title or summary' %}" aria-label="{% trans 'Search Box' %}" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button name="search-related" class="btn btn-outline-secondary" type="submit">{% trans 'Search' %}</button>
+                <button name="clean-search" class="btn btn-outline-secondary" type="reset">{% trans 'Clean' %}</button>
+            </div>
+        </div>
+  </div>
+  <div class="row">
+      <table class="table" name="tbl-unrelated-ideas" idea_id="{{ idea_id }}">
+          <thead>
+            <tr>
+                <th>{% trans 'Id' %}</th>
+                <th>{% trans 'Title' %}</th>
+                <th>{% trans 'Summary' %}</th>
+                <th>{% trans 'Author' %}</th>
+                <th>{% trans 'Relate' %}</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+      </table>
+  </div>
+
+  <div class="row">
+    <h4>{% trans 'Idea Relationships' %}</h4>
+    <table class="table tbl-related-ideas" name="tbl-related-ideas">
+        <thead>
+            <tr>
+                <th>{% trans 'Id' %}</th>
+                <th>{% trans 'Title' %}</th>
+                <th>{% trans 'Summary' %}</th>
+                <th>{% trans 'Author' %}</th>
+                <th>{% trans 'Delete Relationship' %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for relation in relationship %}
+            <tr class="table-row" tr-id="{{relation.id}}">
+                <td width="5%" class="table-row-description"> {{relation.id}}</td>
+                <td width="30%" class="table-row-description">{{relation.title}}</td>
+                <td width="30%" class="table-row-value">{{relation.summary}}</td>
+                <td width="10%" class="table-row-description">{{relation.author}}</td>
+                <td width="10%" class="text-center">
+                    <button type="button" class="btn del-relation">
+                        <i class="fa fa-trash"></i> 
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </div>
+
+  <div class="row justify-content-md-center" name="counter" count="{{relationship_len}}">
+    <h5 class="text-center"> {% trans 'Number of related ideas: ' %} </h5> 
+    <h5 class="text-center"> {{relationship_len}} </h5>    
+  </div>
+
+</div>
+{% include 'ideax/includes/partial_modal_delete_relationship.html' %}
+{% endblock %}

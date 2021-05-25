@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    .container {
+      width: 50%;
+      margin: auto;
+
+      /*   background: #a6a6a6; */
+    }
+
+    .logo_row {
+      padding: 20px 10px;
+      background-color: rgb(45, 50, 62);
+    }
+
+    .logo {
+      width: 100px;
+      margin: auto;
+    }
+
+    .logo img {
+      width: 100%;
+    }
+
+    .email_text {
+      padding: 20px;
+      /*   margin-bottom: 25px; */
+    }
+
+    .email_text a {
+      color: inherit;
+    }
+
+    .blog_parent {
+      background-color: #a6a6a6;
+      padding: 10px;
+    }
+
+    .blog {
+      background-color: white;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .logo {
+      color: white;
+      font-size: 1.5em;
+    }
+
+    .image {
+      display: inline-block;
+      width: 35%;
+      margin-right: 10px;
+      height: 100%;
+    }
+
+    .content {
+      display: inline-block;
+      width: 60%;
+    }
+
+    .author_image {
+      display: inline-block;
+      width: 10%;
+    }
+
+    .author_image img {
+      border-radius: 100%;
+    }
+
+    .author_name {
+      display: inline-block;
+      width: 80%;
+      text-align: center;
+    }
+
+    img {
+      width: 100%;
+    }
+
+    h3 {
+      margin-top: 0px;
+    }
+
+    footer {
+      background-color: rgb(45, 50, 62);
+      text-align: center;
+      padding: 10px;
+      color: white;
+      font-size: 12px;
+    }
+
+    svg {
+      fill: white;
+    }
+
+    .social a {
+      margin: 2px;
+    }
+
+    .unsubscribe {
+      color: #888
+    }
+
+    footer a {
+      color: white;
+    }
+
+    .social a {
+      text-decoration: none;
+    }
+
+    @media(max-width: 600px) {
+      .container {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container" style="background-color:#f6f7f9">
+    <div class="logo_row">
+      <div class="logo">
+        ideaX
+      </div>
+    </div>
+    <div class="email_text">
+      <p>Olá,<span id="userName"> {{username}}</span></p>
+      <p>A ideia: {{idea}} recebeu um {{notification}}! <br /> Entre no ideax e confira.
+    </p>
+    </div>
+    <footer>
+      <p>© Dataprev 2019
+    </footer>
+
+  </div>
+
+</html>

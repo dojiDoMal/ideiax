@@ -1,0 +1,18 @@
+{% load mptt_tags %}
+{% load widget_tweaks i18n %}
+{% load humanize %}
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="DeleteModal" aria-hidden="true" id="mi-modal">
+    <div class="modal-dialog modal-bg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p class="modal-title" id="LabelModalDelete"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="modal-btn-yes-comment">{% trans 'Yes' %}</button>
+                <button type="button" class="btn btn-primary" id="modal-btn-no-comment">{% trans 'No' %}</button>
+            </div>
+
+        </div>
+    </div>
+</div>

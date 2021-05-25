@@ -1,0 +1,64 @@
+{% load widget_tweaks %}
+<div class="form-group{% if form.title.errors %} has-error{% endif %}">
+  <label for="{{form.title.id_for_label}}">{{form.title.label}}</label>
+  {{ form.title|add_class:'form-control' }}
+  {% for error in form.title.errors %}
+    <p class="help-block">{{ error }}</p>
+  {% endfor %}
+</div>
+
+<div class="form-group{% if form.summary.errors %} has-error{% endif %}">
+  <label for="{{form.summary.id_for_label}}">{{form.summary.label}}</label>
+  {{ form.summary|add_class:'form-control' }}
+  {% for error in form.summary.errors %}
+    <p class="help-block">{{ error }}</p>
+  {% endfor %}
+</div>
+
+<div class="form-group{% if form.oportunity.errors %} has-error{% endif %}">
+  <label for="{{form.oportunity.id_for_label}}">{{form.oportunity.label}}</label>
+  {{ form.oportunity|add_class:'form-control'}}
+  {% for error in form.oportunity.errors %}
+    <p class="help-block">{{ error }}</p>
+  {% endfor %}
+</div>
+
+<div class="form-group{% if form.solution.errors %} has-error{% endif %}">
+  <label for="{{form.solution.id_for_label}}">{{form.solution.label}}</label>
+  {{ form.solution|add_class:'form-control' }}
+  {% for error in form.solution.errors %}
+    <p class="help-block">{{ error }}</p>
+  {% endfor %}
+</div>
+
+<div class="form-group{% if form.target.errors %} has-error{% endif %}">
+  <label for="{{form.target.id_for_label}}">{{form.target.label}}</label>
+  {{ form.target|add_class:'form-control' }}
+  {% for error in form.target.errors %}
+    <p class="help-block">{{ error }}</p>
+  {% endfor %}
+</div>
+
+<div class="form-group{% if form.category.errors %} has-error{% endif %}">
+  <label for="{{form.category.id_for_label}}">{{form.category.label}}</label>
+  {{ form.category|add_class:'form-control' }}
+  {% for error in form.category.errors %}
+    <p class="help-block">{{ error }}</p>
+  {% endfor %}
+</div>
+
+<div class="form-group{% if form.challenge.errors %} has-error{% endif %}">
+  <label for="{{form.challenge.id_for_label}}">{{form.challenge.label}}</label>
+  {{ form.challenge|add_class:'form-control' }}
+  {% for error in form.challenge.errors %}
+    <p class="help-block">{{ error }}</p>
+  {% endfor %}
+</div>
+
+<div class="form-group{% if form.authors.errors %} has-error{% endif %} authors-new-idea">
+  <label for="{{form.authors.id_for_label}}">{{form.authors.label}}</label>
+  {{ form.authors|add_class:'form-control' }}
+  {% for error in form.authors.errors %}
+    <p class="help-block">{{ error }}</p>
+  {% endfor %}
+</div>
